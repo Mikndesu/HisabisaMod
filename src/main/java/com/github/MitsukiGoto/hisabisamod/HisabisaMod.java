@@ -2,6 +2,7 @@ package com.github.MitsukiGoto.hisabisamod;
 
 import java.util.logging.LogManager;
 
+import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -20,11 +21,12 @@ public class HisabisaMod {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::setup);
         ItemInit.ITEMS.register(bus);
+        BiomeInit.BIOMES.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent evt) {
-
+        BiomeInit.setupBiome();
     }
     
 }
