@@ -28,5 +28,5 @@ public class HisabisaMod {
     private void setup(final FMLCommonSetupEvent evt) {
         BiomeInit.setupBiome();
     }
-    
+
 }

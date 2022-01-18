@@ -19,8 +19,10 @@ public class BiomeInit {
             HisabisaMod.MODID);
     public static final RegistryObject<Biome> HISABISA_BIOME = BIOMES.register("hisabisa_biome",
             () -> BiomeHisabisa.hisabisaBiome());
+
     public static void setupBiome() {
-        RegistryKey<Biome> key = RegistryKey.create(ForgeRegistries.Keys.BIOMES, Objects.requireNonNull(ForgeRegistries.BIOMES.getKey(HISABISA_BIOME.get()), "Biome registry name was null"));
+        RegistryKey<Biome> key = RegistryKey.create(ForgeRegistries.Keys.BIOMES, Objects
+                .requireNonNull(ForgeRegistries.BIOMES.getKey(HISABISA_BIOME.get()), "Biome registry name was null"));
         BiomeManager.addBiome(BiomeManager.BiomeType.WARM, new BiomeManager.BiomeEntry(key, 100));
         BiomeDictionary.addTypes(key, Type.PLAINS, Type.OVERWORLD);
     }

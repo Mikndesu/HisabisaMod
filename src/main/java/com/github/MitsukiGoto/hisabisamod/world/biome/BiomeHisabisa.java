@@ -1,5 +1,7 @@
 package com.github.MitsukiGoto.hisabisamod.world.biome;
 
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeAmbience;
@@ -14,11 +16,19 @@ public class BiomeHisabisa {
 
     public static Biome hisabisaBiome() {
         MobSpawnInfo.Builder mobspawninfo$builder = new MobSpawnInfo.Builder();
-        DefaultBiomeFeatures.plainsSpawns(mobspawninfo$builder);
+        mobspawninfo$builder.addSpawn(EntityClassification.MONSTER,
+                new MobSpawnInfo.Spawners(EntityType.BLAZE, 15, 5, 10));
+        mobspawninfo$builder.addSpawn(EntityClassification.MONSTER,
+                new MobSpawnInfo.Spawners(EntityType.GIANT, 15, 5, 10));
+        mobspawninfo$builder.addSpawn(EntityClassification.MONSTER,
+                new MobSpawnInfo.Spawners(EntityType.DROWNED, 15, 5, 10));
         BiomeGenerationSettings.Builder biomegenerationsettings$builder = (new BiomeGenerationSettings.Builder())
                 .surfaceBuilder(ConfiguredSurfaceBuilders.GRASS);
         DefaultBiomeFeatures.addDefaultOverworldLandStructures(biomegenerationsettings$builder);
         biomegenerationsettings$builder.addStructureStart(StructureFeatures.RUINED_PORTAL_STANDARD);
+        biomegenerationsettings$builder.addStructureStart(StructureFeatures.END_CITY);
+        biomegenerationsettings$builder.addStructureStart(StructureFeatures.IGLOO);
+        biomegenerationsettings$builder.addStructureStart(StructureFeatures.WOODLAND_MANSION);
         DefaultBiomeFeatures.addDefaultCarvers(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDefaultLakes(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDefaultMonsterRoom(biomegenerationsettings$builder);
@@ -43,5 +53,5 @@ public class BiomeHisabisa {
         float lvt_1_1_ = p_244206_0_ / 3.0F;
         lvt_1_1_ = MathHelper.clamp(lvt_1_1_, -1.0F, 1.0F);
         return MathHelper.hsvToRgb(0.62222224F - lvt_1_1_ * 0.05F, 0.5F + lvt_1_1_ * 0.1F, 1.0F);
-     }
+    }
 }
