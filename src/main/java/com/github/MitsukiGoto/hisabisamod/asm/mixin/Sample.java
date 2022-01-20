@@ -1,5 +1,6 @@
 package com.github.MitsukiGoto.hisabisamod.asm.mixin;
 
+import net.minecraft.world.biome.BiomeMaker;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,9 +12,9 @@ import net.minecraft.util.SoundEvents;
 
 @Mixin(CreeperEntity.class)
 public class Sample {
-    @Inject(at=@At("RETURN"), method="getHurtSound(Lnet/minecraft/util/DamageSource;)Lnet/minecraft/util/SoundEvent", cancellable=true)
+    @Inject(at=@At("RETURN"), method="getHurtSound(Lnet/minecraft/util/DamageSource;)Lnet/minecraft/util/SoundEvent;", cancellable=true)
     private void injection(CallbackInfoReturnable<SoundEvent> info) {
         info.setReturnValue(SoundEvents.ZOMBIE_HURT);
     }
-    
 }
+
