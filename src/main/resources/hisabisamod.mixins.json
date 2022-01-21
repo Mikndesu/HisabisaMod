@@ -5,7 +5,8 @@
 	"refmap": "hisabisamod.refmap.json",
 	"mixins": [
         "Sample",
-		"Sample2"
+		"Sample2",
+		"Sample3"
 	],
 	"client": [
 	],
