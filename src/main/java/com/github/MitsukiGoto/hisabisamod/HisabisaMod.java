@@ -5,6 +5,8 @@ import java.util.logging.LogManager;
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 
+import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
+import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -27,6 +29,8 @@ public class HisabisaMod {
 
     private void setup(final FMLCommonSetupEvent evt) {
         BiomeInit.setupBiome();
+        StructureInit.setupStructures();
+        HisabisaConfiguredStructure.registerConfiguredStructures();
     }
 
 }
