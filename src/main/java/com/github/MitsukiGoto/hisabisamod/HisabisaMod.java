@@ -23,14 +23,15 @@ public class HisabisaMod {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::setup);
         ItemInit.ITEMS.register(bus);
+        StructureInit.STRUCTURES.register(bus);
         BiomeInit.BIOMES.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent evt) {
-        BiomeInit.setupBiome();
         StructureInit.setupStructures();
         HisabisaConfiguredStructure.registerConfiguredStructures();
+        BiomeInit.setupBiome();
     }
 
 }
