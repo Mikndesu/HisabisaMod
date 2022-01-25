@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(Block.class)
-public abstract class Sample5 implements IForgeBlock {
+public abstract class IForgeBlockMixin implements IForgeBlock {
     boolean isCreeperAndSpawner = false;
     @Override
     public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {

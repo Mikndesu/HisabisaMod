@@ -11,7 +11,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
 @Mixin(CreeperEntity.class)
-public class Sample {
+public class CreeperMixin {
     @Inject(at=@At("RETURN"), method="getHurtSound(Lnet/minecraft/util/DamageSource;)Lnet/minecraft/util/SoundEvent;", cancellable=true)
     private void injection(CallbackInfoReturnable<SoundEvent> info) {
         info.setReturnValue(SoundEvents.ZOMBIE_HURT);

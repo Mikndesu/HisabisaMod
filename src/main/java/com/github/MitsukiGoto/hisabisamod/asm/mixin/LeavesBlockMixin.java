@@ -21,7 +21,7 @@ import static net.minecraft.block.LeavesBlock.DISTANCE;
 import static net.minecraft.block.LeavesBlock.PERSISTENT;
 
 @Mixin(LeavesBlock.class)
-public class Sample3 {
+public class LeavesBlockMixin {
     @Inject(at=@At("RETURN"), method= "randomTick(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/server/ServerWorld;Lnet/minecraft/util/math/BlockPos;Ljava/util/Random;)V")
     private void injection(BlockState p_225542_1_, ServerWorld p_225542_2_, BlockPos p_225542_3_, Random p_225542_4_, CallbackInfo ci){
         if (!p_225542_1_.getValue(PERSISTENT) && p_225542_1_.getValue(DISTANCE) == 7) {

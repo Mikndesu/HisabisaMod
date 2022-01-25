@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractSpawner.class)
-public class Sample4 {
+public class AbstractSpawnerMixin  {
     @Inject(method= "setEntityId(Lnet/minecraft/entity/EntityType;)V", at=@At("RETURN"))
     private void inject(EntityType<?> p_200876_1_, CallbackInfo info) {
         if(p_200876_1_ == EntityType.CAVE_SPIDER) {
