@@ -7,19 +7,26 @@ import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
+import net.minecraft.entity.EntityType;
+import net.minecraft.world.gen.feature.DungeonsFeature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 
 @Mod(HisabisaMod.MODID)
 public class HisabisaMod {
 
     public static final String MODID = "hisabisamod";
+    public static final String HISABISA_STRUCTURE_NAME = "hisabisa_structure";
+    public static final String HISABISA_BIOME_NAME = "hisabisa_biome";
     public static final Logger LOGGER = LogManager.getLogger();
 
     public HisabisaMod() {
@@ -41,7 +48,6 @@ public class HisabisaMod {
     }
 
     public void biomeModification(final BiomeLoadingEvent evt) {
-        System.out.println(evt.getName());
         evt.getGeneration().getStructures().add(() -> HisabisaConfiguredStructure.CONFIGURED_HISABISA_STRUCTURE);
     }
 

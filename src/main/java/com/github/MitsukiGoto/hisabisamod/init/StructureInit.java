@@ -16,10 +16,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.github.MitsukiGoto.hisabisamod.HisabisaMod.HISABISA_STRUCTURE_NAME;
+
 public class StructureInit {
 
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, HisabisaMod.MODID);
-    public static final RegistryObject<Structure<NoFeatureConfig>> HISABISA_STRUCTURE = STRUCTURES.register("hisabisa_structure", () -> (new HisabisaStructure(NoFeatureConfig.CODEC)));
+    public static final RegistryObject<Structure<NoFeatureConfig>> HISABISA_STRUCTURE = STRUCTURES.register(HISABISA_STRUCTURE_NAME, () -> (new HisabisaStructure(NoFeatureConfig.CODEC)));
 
     public static void setupStructures() {
         setupMapSpacingAndLand(

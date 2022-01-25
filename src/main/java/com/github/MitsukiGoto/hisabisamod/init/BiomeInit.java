@@ -14,10 +14,12 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import static com.github.MitsukiGoto.hisabisamod.HisabisaMod.HISABISA_BIOME_NAME;
+
 public class BiomeInit {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES,
             HisabisaMod.MODID);
-    public static final RegistryObject<Biome> HISABISA_BIOME = BIOMES.register("hisabisa_biome",
+    public static final RegistryObject<Biome> HISABISA_BIOME = BIOMES.register(HISABISA_BIOME_NAME,
             () -> BiomeHisabisa.hisabisaBiome());
 
     public static void setupBiome() {
