@@ -2,24 +2,26 @@ package com.github.MitsukiGoto.hisabisamod;
 
 
 
+import com.github.MitsukiGoto.hisabisamod.asm.mixin.DungeonsFeatureMixin;
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
 import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.feature.DungeonsFeature;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Arrays;
 
 @Mod(HisabisaMod.MODID)
 public class HisabisaMod {
@@ -39,7 +41,16 @@ public class HisabisaMod {
         MinecraftForge.EVENT_BUS.addListener(this::biomeModification);
     }
 
-    private void setup(final FMLCommonSetupEvent evt) {
+    @SubscribeEvent
+    public void onCreeperSpawns(LivingSpawnEvent.SpecialSpawn evt) {
+        if(evt.getEntity() instanceof CreeperEntity) {
+            SpawnReason reason = evt.getSpawnReason();
+            LOGGER.log(Level.ERROR, reason.toString());
+        }
+    }
+
+    @SubscribeEvent
+    public void setup(final FMLCommonSetupEvent evt) {
         evt.enqueueWork(()->{
             StructureInit.setupStructures();
             HisabisaConfiguredStructure.registerConfiguredStructures();

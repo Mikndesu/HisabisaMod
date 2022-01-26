@@ -1,16 +1,16 @@
 {
-	"required": true,
-	"package": "com.github.MitsukiGoto.hisabisamod.asm.mixin",
-	"compatibilityLevel": "JAVA_8",
-	"refmap": "hisabisamod.refmap.json",
-	"mixins": [
-        "LeavesBlockMixin",
-		"BiomeGenerationSettingsMixin",
-		"CreeperMixin",
-		"IForgeBlockMixin",
-		"LeavesBlockMixin"
-	],
-	"client": [
-	],
-	"minVersion": "0.8"
+  "required": true,
+  "package": "com.github.MitsukiGoto.hisabisamod.asm.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "hisabisamod.refmap.json",
+  "mixins": [
+    "BiomeGenerationSettingsMixin",
+    "CreeperMixin",
+    "IForgeBlockMixin",
+    "LeavesBlockMixin",
+    "DungeonsFeatureMixin"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
 }

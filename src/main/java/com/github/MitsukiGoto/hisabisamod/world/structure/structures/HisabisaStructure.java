@@ -110,7 +110,7 @@ public class HisabisaStructure extends Structure<NoFeatureConfig> {
 
             this.calculateBoundingBox();
 
-            HisabisaMod.LOGGER.log(Level.DEBUG, "Rundown House at " +
+            HisabisaMod.LOGGER.log(Level.DEBUG, "Structure is at " +
                     this.pieces.get(0).getBoundingBox().x0 + " " +
                     this.pieces.get(0).getBoundingBox().y0 + " " +
                     this.pieces.get(0).getBoundingBox().z0);
