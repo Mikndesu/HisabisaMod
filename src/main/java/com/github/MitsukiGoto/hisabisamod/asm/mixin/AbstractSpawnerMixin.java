@@ -1,13 +1,18 @@
 package com.github.MitsukiGoto.hisabisamod.asm.mixin;
 
 import com.github.MitsukiGoto.hisabisamod.HisabisaMod;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.spawner.AbstractSpawner;
 import org.apache.logging.log4j.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AbstractSpawner.class)
@@ -20,9 +25,9 @@ public class AbstractSpawnerMixin  {
             return;
         }
     }
-    @Inject(method= "tick()V", at=@At(value="INVOKE",target = "Lnet/minecraft/world/spawner/AbstractSpawner;getLevel()Lnet/minecraft/world/World;"))
-    private void tick_inject(CallbackInfo ci) {
-        AbstractSpawner abstractSpawner = ((AbstractSpawner)(Object)this);
-        HisabisaMod.LOGGER.log(Level.ERROR, "Spawner of "+abstractSpawner.getSpawnerEntity().toString()+" is created at "+ abstractSpawner.getPos() +"");
+    @Redirect(method= "tick()V", at=@At(shift=At.Shift.AFTER,value="INVOKE",target = "Lnet/minecraft/entity/MobEntity;finalizeSpawn(Lnet/minecraft/world/IServerWorld;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/entity/SpawnReason;Lnet/minecraft/entity/ILivingEntityData;Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ILivingEntityData;"))
+    private void tick_inject(Entity entity, CallbackInfo ci) {
+        if(entity instanceof CreeperEntity) {
+        }
     }
 }
