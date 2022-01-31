@@ -1,4 +1,4 @@
-package com.github.MitsukiGoto.hisabisamod.asm.mixin;
+package com.github.MitsukiGoto.hisabisamod.asm.mixin.block;
 
 import com.github.MitsukiGoto.hisabisamod.HisabisaMod;
 import net.minecraft.entity.Entity;

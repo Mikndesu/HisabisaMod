@@ -1,4 +1,4 @@
-package com.github.MitsukiGoto.hisabisamod.asm.mixin;
+package com.github.MitsukiGoto.hisabisamod.asm.mixin.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;

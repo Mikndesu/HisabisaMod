@@ -2,13 +2,11 @@ package com.github.MitsukiGoto.hisabisamod;
 
 
 
-import com.github.MitsukiGoto.hisabisamod.asm.mixin.DungeonsFeatureMixin;
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,7 +17,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package com.github.MitsukiGoto.hisabisamod.asm.mixin;
+package com.github.MitsukiGoto.hisabisamod.asm.mixin.anythingElse;
 
 import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.biome.BiomeMaker;
