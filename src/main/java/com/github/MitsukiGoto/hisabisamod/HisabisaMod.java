@@ -45,7 +45,6 @@ public class HisabisaMod {
     public void onCreeperSpawns(LivingSpawnEvent.SpecialSpawn evt) {
         if(evt.getEntity() instanceof CreeperEntity) {
             SpawnReason reason = evt.getSpawnReason();
-            LOGGER.log(Level.ERROR, reason.toString());
             if(reason==SpawnReason.SPAWNER) {
                 evt.getEntity().addTag("FromSpawner");
             }

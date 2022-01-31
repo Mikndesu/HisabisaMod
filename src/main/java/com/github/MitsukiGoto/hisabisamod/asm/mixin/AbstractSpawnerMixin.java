@@ -21,7 +21,6 @@ public class AbstractSpawnerMixin  {
     private void setEntityId_inject(EntityType<?> p_200876_1_, CallbackInfo info) {
         if(p_200876_1_ == EntityType.CAVE_SPIDER) {
             ((AbstractSpawner)(Object)this).nextSpawnData.getTag().putString("id", Registry.ENTITY_TYPE.getKey(EntityType.WITHER).toString());
-            HisabisaMod.LOGGER.log(Level.ERROR, "Injected!!!");
             return;
         }
     }
