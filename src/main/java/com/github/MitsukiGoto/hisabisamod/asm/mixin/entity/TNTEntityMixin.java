@@ -1,4 +1,4 @@
-package com.github.MitsukiGoto.hisabisamod.asm.mixin;
+package com.github.MitsukiGoto.hisabisamod.asm.mixin.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.TNTEntity;

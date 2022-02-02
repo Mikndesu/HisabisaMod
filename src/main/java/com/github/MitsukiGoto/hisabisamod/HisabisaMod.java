@@ -1,15 +1,26 @@
 package com.github.MitsukiGoto.hisabisamod;
 
 
-
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.CreeperEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -40,15 +51,45 @@ public class HisabisaMod {
 
     @SubscribeEvent
     public void onCreeperSpawns(LivingSpawnEvent.SpecialSpawn evt) {
-        if(evt.getEntity() instanceof CreeperEntity) {
-            CreeperEntity creeperEntity = (CreeperEntity)evt.getEntity();
+        if (evt.getEntity() instanceof CreeperEntity) {
+            CreeperEntity creeperEntity = (CreeperEntity) evt.getEntity();
             creeperEntity.getEntityData().set(CreeperEntity.DATA_IS_POWERED, true);
         }
     }
 
     @SubscribeEvent
+    public void onEntityMoved(LivingEvent.LivingUpdateEvent evt) {
+        LivingEntity entity = evt.getEntityLiving();
+        if (!(entity instanceof PlayerEntity)) {
+            return;
+        }
+        if (entity.isOnGround()) {
+            BlockPos blockPos = evt.getEntity().blockPosition();
+            World world = evt.getEntity().getCommandSenderWorld();
+            BlockState blockstate = Blocks.FROSTED_ICE.defaultBlockState();
+            float f = (float) Math.min(16, 2);
+            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+            for (BlockPos blockpos : BlockPos.betweenClosed(blockPos.offset((double) (-f), -1.0D, (double) (-f)), blockPos.offset((double) f, -1.0D, (double) f))) {
+                if (blockpos.closerThan(entity.position(), (double) f)) {
+                    blockpos$mutable.set(blockpos.getX(), blockpos.getY() + 1, blockpos.getZ());
+                    BlockState blockstate1 = world.getBlockState(blockpos$mutable);
+                    if (blockstate1.isAir(world, blockpos$mutable)) {
+                        BlockState blockstate2 = world.getBlockState(blockpos);
+                        boolean isFull = blockstate2.getBlock() == Blocks.WATER && blockstate2.getValue(FlowingFluidBlock.LEVEL) == 0;
+                        if (blockstate2.getMaterial() == Material.WATER && isFull && blockstate.canSurvive(world, blockpos) && world.isUnobstructed(blockstate, blockpos, ISelectionContext.empty()) && !net.minecraftforge.event.ForgeEventFactory.onBlockPlace(entity, net.minecraftforge.common.util.BlockSnapshot.create(world.dimension(), world, blockpos), net.minecraft.util.Direction.UP)) {
+                            world.setBlockAndUpdate(blockpos, blockstate);
+                            world.getBlockTicks().scheduleTick(blockpos, Blocks.FROSTED_ICE, MathHelper.nextInt(entity.getRandom(), 60, 120));
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    @SubscribeEvent
     public void setup(final FMLCommonSetupEvent evt) {
-        evt.enqueueWork(()->{
+        evt.enqueueWork(() -> {
             StructureInit.setupStructures();
             HisabisaConfiguredStructure.registerConfiguredStructures();
             BiomeInit.setupBiome();

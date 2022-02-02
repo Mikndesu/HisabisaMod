@@ -9,7 +9,7 @@
     "anythingElse.DungeonsFeatureMixin",
     "block.IForgeBlockMixin",
     "block.LeavesBlockMixin",
-    "TNTEntityMixin"
+    "entity.TNTEntityMixin"
   ],
   "client": [
   ],
