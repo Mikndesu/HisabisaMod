@@ -38,7 +38,7 @@ public class HisabisaMod {
     public static final String MODID = "hisabisamod";
     public static final String HISABISA_STRUCTURE_NAME = "hisabisa_structure";
     public static final String HISABISA_BIOME_NAME = "hisabisa_biome";
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger("Hisabisa Mod/Main");
 
     public HisabisaMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
