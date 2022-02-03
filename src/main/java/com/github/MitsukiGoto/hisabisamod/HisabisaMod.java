@@ -3,18 +3,19 @@ package com.github.MitsukiGoto.hisabisamod;
 
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
-
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -63,7 +64,9 @@ public class HisabisaMod {
         if (!(entity instanceof PlayerEntity)) {
             return;
         }
-        if (entity.isOnGround()) {
+        ItemStack boots = entity.getItemBySlot(EquipmentSlotType.FEET);
+        int isEnchantedFrostWalker = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FROST_WALKER, boots);
+        if (entity.isOnGround() && isEnchantedFrostWalker == 0) {
             BlockPos blockPos = evt.getEntity().blockPosition();
             World world = evt.getEntity().getCommandSenderWorld();
             BlockState blockstate = Blocks.FROSTED_ICE.defaultBlockState();

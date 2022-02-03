@@ -20,8 +20,7 @@ public class AbstractSpawnerMixin  {
     @Inject(method= "setEntityId(Lnet/minecraft/entity/EntityType;)V", at=@At("RETURN"))
     private void setEntityId_inject(EntityType<?> p_200876_1_, CallbackInfo info) {
         if(p_200876_1_ == EntityType.CAVE_SPIDER) {
-            ((AbstractSpawner)(Object)this).nextSpawnData.getTag().putString("id", Registry.ENTITY_TYPE.getKey(EntityType.WITHER).toString());
-            return;
+            ((AbstractSpawner)(Object)this).nextSpawnData.getTag().putString("id", Registry.ENTITY_TYPE.getKey(EntityType.CREEPER).toString());
         }
     }
     @Redirect(method= "tick()V", at=@At(shift=At.Shift.AFTER,value="INVOKE",target = "Lnet/minecraft/entity/MobEntity;finalizeSpawn(Lnet/minecraft/world/IServerWorld;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/entity/SpawnReason;Lnet/minecraft/entity/ILivingEntityData;Lnet/minecraft/nbt/CompoundNBT;)Lnet/minecraft/entity/ILivingEntityData;"))
