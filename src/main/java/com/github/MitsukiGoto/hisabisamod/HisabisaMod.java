@@ -1,6 +1,6 @@
 package com.github.MitsukiGoto.hisabisamod;
 
-
+import com.github.MitsukiGoto.hisabisamod.config.HisabisaConfig;
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
@@ -26,7 +26,9 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -42,6 +44,7 @@ public class HisabisaMod {
 
     public HisabisaMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, HisabisaConfig.SPEC, "hisabisamod-common.toml");
         ItemInit.ITEMS.register(bus);
         StructureInit.STRUCTURES.register(bus);
         BiomeInit.BIOMES.register(bus);
@@ -66,7 +69,7 @@ public class HisabisaMod {
         }
         ItemStack boots = entity.getItemBySlot(EquipmentSlotType.FEET);
         int isEnchantedFrostWalker = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FROST_WALKER, boots);
-        if (entity.isOnGround() && isEnchantedFrostWalker == 0) {
+        if (entity.isOnGround() && isEnchantedFrostWalker == 0 && HisabisaConfig.isAlways_frosted_walk.get()) {
             BlockPos blockPos = evt.getEntity().blockPosition();
             World world = evt.getEntity().getCommandSenderWorld();
             BlockState blockstate = Blocks.FROSTED_ICE.defaultBlockState();
