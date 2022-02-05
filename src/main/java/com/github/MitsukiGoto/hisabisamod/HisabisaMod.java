@@ -2,6 +2,7 @@ package com.github.MitsukiGoto.hisabisamod;
 
 import com.github.MitsukiGoto.hisabisamod.config.HisabisaConfig;
 import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
+import com.github.MitsukiGoto.hisabisamod.init.BlockInit;
 import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
 import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
@@ -45,9 +46,10 @@ public class HisabisaMod {
     public HisabisaMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, HisabisaConfig.SPEC, "hisabisamod-common.toml");
-        ItemInit.ITEMS.register(bus);
+        BlockInit.BLOCKS.register(bus);
         StructureInit.STRUCTURES.register(bus);
         BiomeInit.BIOMES.register(bus);
+        ItemInit.ITEMS.register(bus);
         bus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::biomeModification);
@@ -90,6 +92,27 @@ public class HisabisaMod {
                 }
             }
 
+        }
+        if (entity.isOnGround() && isEnchantedFrostWalker == 0 && HisabisaConfig.isAlways_frosted_walk.get()) {
+            BlockPos blockPos = evt.getEntity().blockPosition();
+            World world = evt.getEntity().getCommandSenderWorld();
+            BlockState blockstate = BlockInit.MODDED_OBSIDIAN.get().defaultBlockState();
+            float f = (float) Math.min(16, 2);
+            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+            for (BlockPos blockpos : BlockPos.betweenClosed(blockPos.offset((double) (-f), -1.0D, (double) (-f)), blockPos.offset((double) f, -1.0D, (double) f))) {
+                if (blockpos.closerThan(entity.position(), (double) f)) {
+                    blockpos$mutable.set(blockpos.getX(), blockpos.getY() + 1, blockpos.getZ());
+                    BlockState blockstate1 = world.getBlockState(blockpos$mutable);
+                    if (blockstate1.isAir(world, blockpos$mutable)) {
+                        BlockState blockstate2 = world.getBlockState(blockpos);
+                        boolean isFull = blockstate2.getBlock() == Blocks.LAVA && blockstate2.getValue(FlowingFluidBlock.LEVEL) == 0;
+                        if (blockstate2.getMaterial() == Material.LAVA && isFull && blockstate.canSurvive(world, blockpos) && world.isUnobstructed(blockstate, blockpos, ISelectionContext.empty()) && !net.minecraftforge.event.ForgeEventFactory.onBlockPlace(entity, net.minecraftforge.common.util.BlockSnapshot.create(world.dimension(), world, blockpos), net.minecraft.util.Direction.UP)) {
+                            world.setBlockAndUpdate(blockpos, blockstate);
+                            world.getBlockTicks().scheduleTick(blockpos, BlockInit.MODDED_OBSIDIAN.get(), MathHelper.nextInt(entity.getRandom(), 60, 120));
+                        }
+                    }
+                }
+            }
         }
     }
 
