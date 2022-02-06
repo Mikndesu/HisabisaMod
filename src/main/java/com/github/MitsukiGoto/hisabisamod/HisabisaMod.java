@@ -108,7 +108,7 @@ public class HisabisaMod {
                         boolean isFull = blockstate2.getBlock() == Blocks.LAVA && blockstate2.getValue(FlowingFluidBlock.LEVEL) == 0;
                         if (blockstate2.getMaterial() == Material.LAVA && isFull && blockstate.canSurvive(world, blockpos) && world.isUnobstructed(blockstate, blockpos, ISelectionContext.empty()) && !net.minecraftforge.event.ForgeEventFactory.onBlockPlace(entity, net.minecraftforge.common.util.BlockSnapshot.create(world.dimension(), world, blockpos), net.minecraft.util.Direction.UP)) {
                             world.setBlockAndUpdate(blockpos, blockstate);
-                            world.getBlockTicks().scheduleTick(blockpos, BlockInit.MODDED_OBSIDIAN.get(), MathHelper.nextInt(entity.getRandom(), 60, 120));
+                            world.getBlockTicks().scheduleTick(blockpos, BlockInit.MODDED_OBSIDIAN.get(), MathHelper.nextInt(entity.getRandom(), 10, 20));
                         }
                     }
                 }

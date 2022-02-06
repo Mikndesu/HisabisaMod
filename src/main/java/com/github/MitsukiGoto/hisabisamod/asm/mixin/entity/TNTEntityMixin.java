@@ -18,13 +18,13 @@ public class TNTEntityMixin {
             Random random = new Random();
             float rand_x = ((float) (random.nextInt(20) - 10)) * 1.1f;
             float rand_z = ((float) (random.nextInt(20) - 10)) * 1.1f;
-            world.explode(entity, x_pos + rand_x, y_pos, z_pos - rand_z, 2.5f, mode);
+            world.explode(entity, x_pos + rand_x, y_pos, z_pos - rand_z, 10.0f, mode);
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        return world.explode(entity, x_pos, y_pos, z_pos, 2.5f, mode);
+        return world.explode(entity, x_pos, y_pos, z_pos, 100.0f, mode);
     }
 }

@@ -20,12 +20,12 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 import static net.minecraft.block.FrostedIceBlock.AGE;
-import static net.minecraft.state.properties.BlockStateProperties.AGE_2;
+import static net.minecraft.state.properties.BlockStateProperties.AGE_1;
 
 public class ModdedCryingObsidian extends Block {
     public ModdedCryingObsidian() {
         super(Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(50.0F, 1200.0F).lightLevel((p_235435_0_) -> 10));
-        this.registerDefaultState(this.stateDefinition.any().setValue(AGE_2, Integer.valueOf(0)));
+        this.registerDefaultState(this.stateDefinition.any().setValue(AGE_1, Integer.valueOf(0)));
     }
 
     @Override
@@ -42,9 +42,9 @@ public class ModdedCryingObsidian extends Block {
     }
 
     private boolean slightlyMelt(BlockState p_196455_1_, World p_196455_2_, BlockPos p_196455_3_) {
-        int i = p_196455_1_.getValue(AGE_2);
-        if (i < 2) {
-            p_196455_2_.setBlock(p_196455_3_, p_196455_1_.setValue(AGE_2, Integer.valueOf(i + 1)), 2);
+        int i = p_196455_1_.getValue(AGE_1);
+        if (i < 1) {
+            p_196455_2_.setBlock(p_196455_3_, p_196455_1_.setValue(AGE_1, Integer.valueOf(i + 1)), 2);
             return false;
         } else {
             this.melt(p_196455_1_, p_196455_2_, p_196455_3_);
@@ -58,6 +58,6 @@ public class ModdedCryingObsidian extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(AGE_2);
+        builder.add(AGE_1);
     }
 }
