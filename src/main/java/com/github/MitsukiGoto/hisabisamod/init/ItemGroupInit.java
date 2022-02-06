@@ -11,7 +11,7 @@ public class ItemGroupInit {
 
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(new HisabisaItem());
+            return new ItemStack(ItemInit.HISABISA_ITEM.get());
         }
     });
     

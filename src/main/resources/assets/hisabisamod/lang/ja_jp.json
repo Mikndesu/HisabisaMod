@@ -2,5 +2,6 @@
     "item.hisabisamod.hisabisa_item" : "ひさびさアイテム",
     "block.hisabisamod.modded_obsidian" : "黒曜石(Mod)",
     "block.hisabisamod.modded_crying_obsidian" : "泣く黒曜石(Mod)",
+    "enchantment.hisabisamod.lava_walker": "溶岩渡り",
     "itemGroup.hisabisa" : "ひさびさ"
 }

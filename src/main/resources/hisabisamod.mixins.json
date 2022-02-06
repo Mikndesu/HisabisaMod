@@ -4,11 +4,12 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "hisabisamod.refmap.json",
   "mixins": [
-    "anythingElse.BiomeGenerationSettingsMixin",
-    "entity.CreeperMixin",
-    "anythingElse.DungeonsFeatureMixin",
+    "World.gen.BiomeGenerationSettingsMixin",
+    "World.feature.DungeonsFeatureMixin",
     "block.IForgeBlockMixin",
     "block.LeavesBlockMixin",
+    "entity.CreeperMixin",
+    "entity.LivingEntityMixin",
     "entity.TNTEntityMixin"
   ],
   "client": [

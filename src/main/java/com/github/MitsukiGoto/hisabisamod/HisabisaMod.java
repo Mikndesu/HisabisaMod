@@ -1,15 +1,13 @@
 package com.github.MitsukiGoto.hisabisamod;
 
 import com.github.MitsukiGoto.hisabisamod.config.HisabisaConfig;
-import com.github.MitsukiGoto.hisabisamod.init.BiomeInit;
-import com.github.MitsukiGoto.hisabisamod.init.BlockInit;
-import com.github.MitsukiGoto.hisabisamod.init.ItemInit;
-import com.github.MitsukiGoto.hisabisamod.init.StructureInit;
+import com.github.MitsukiGoto.hisabisamod.init.*;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -50,6 +48,7 @@ public class HisabisaMod {
         StructureInit.STRUCTURES.register(bus);
         BiomeInit.BIOMES.register(bus);
         ItemInit.ITEMS.register(bus);
+        EnchantmentInit.ENCHANTMENTS.register(bus);
         bus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.addListener(this::biomeModification);
@@ -57,7 +56,7 @@ public class HisabisaMod {
 
     @SubscribeEvent
     public void onCreeperSpawns(LivingSpawnEvent.SpecialSpawn evt) {
-        if (evt.getEntity() instanceof CreeperEntity) {
+        if (evt.getEntity() instanceof CreeperEntity && HisabisaConfig.isSpawnedCreeper_should_be_charged.get()) {
             CreeperEntity creeperEntity = (CreeperEntity) evt.getEntity();
             creeperEntity.getEntityData().set(CreeperEntity.DATA_IS_POWERED, true);
         }
@@ -93,7 +92,8 @@ public class HisabisaMod {
             }
 
         }
-        if (entity.isOnGround() && isEnchantedFrostWalker == 0 && HisabisaConfig.isAlways_frosted_walk.get()) {
+        int isEnchantedLavaWalker = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.LAVA_WALKER.get(), boots);
+        if (entity.isOnGround() && isEnchantedLavaWalker == 0 && HisabisaConfig.isAlways_lava_walk.get()) {
             BlockPos blockPos = evt.getEntity().blockPosition();
             World world = evt.getEntity().getCommandSenderWorld();
             BlockState blockstate = BlockInit.MODDED_OBSIDIAN.get().defaultBlockState();
