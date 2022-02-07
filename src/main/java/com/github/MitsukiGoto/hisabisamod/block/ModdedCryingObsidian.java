@@ -30,14 +30,15 @@ public class ModdedCryingObsidian extends Block {
 
     @Override
     public void setPlacedBy(World world, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity p_180633_4_, ItemStack itemStack) {
+        HisabisaMod.LOGGER.debug("Modded Crying Obsidian has been placed.");
     }
 
     @Override
-    public void tick(BlockState p_225534_1_, ServerWorld p_225534_2_, BlockPos p_225534_3_, Random p_225534_4_) {
-        if ((p_225534_4_.nextInt(3) == 0 && this.slightlyMelt(p_225534_1_, p_225534_2_, p_225534_3_))) {
+    public void tick(BlockState blockState, ServerWorld serverWorld, BlockPos blockPos, Random p_225534_4_) {
+        if ((p_225534_4_.nextInt(3) == 0 && this.slightlyMelt(blockState, serverWorld, blockPos))) {
             HisabisaMod.LOGGER.debug("Modded Crying Obsidian get aged");
         } else {
-            p_225534_2_.getBlockTicks().scheduleTick(p_225534_3_, this, MathHelper.nextInt(p_225534_4_, 20, 40));
+            serverWorld.getBlockTicks().scheduleTick(blockPos, this, MathHelper.nextInt(p_225534_4_, 20, 40));
         }
     }
 

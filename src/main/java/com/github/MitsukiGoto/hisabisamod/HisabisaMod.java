@@ -1,24 +1,17 @@
 package com.github.MitsukiGoto.hisabisamod;
 
 import com.github.MitsukiGoto.hisabisamod.config.HisabisaConfig;
+import com.github.MitsukiGoto.hisabisamod.enchant.LavaWalkerEnchantment;
 import com.github.MitsukiGoto.hisabisamod.init.*;
 import com.github.MitsukiGoto.hisabisamod.world.structure.HisabisaConfiguredStructure;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.FrostWalkerEnchantment;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -64,55 +57,18 @@ public class HisabisaMod {
 
     @SubscribeEvent
     public void onEntityMoved(LivingEvent.LivingUpdateEvent evt) {
-        LivingEntity entity = evt.getEntityLiving();
-        if (!(entity instanceof PlayerEntity)) {
+        LivingEntity entityLiving = evt.getEntityLiving();
+        if (!(entityLiving instanceof PlayerEntity)) {
             return;
         }
-        ItemStack boots = entity.getItemBySlot(EquipmentSlotType.FEET);
+        ItemStack boots = entityLiving.getItemBySlot(EquipmentSlotType.FEET);
         int isEnchantedFrostWalker = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FROST_WALKER, boots);
-        if (entity.isOnGround() && isEnchantedFrostWalker == 0 && HisabisaConfig.isAlways_frosted_walk.get()) {
-            BlockPos blockPos = evt.getEntity().blockPosition();
-            World world = evt.getEntity().getCommandSenderWorld();
-            BlockState blockstate = Blocks.FROSTED_ICE.defaultBlockState();
-            float f = (float) Math.min(16, 2);
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-            for (BlockPos blockpos : BlockPos.betweenClosed(blockPos.offset((double) (-f), -1.0D, (double) (-f)), blockPos.offset((double) f, -1.0D, (double) f))) {
-                if (blockpos.closerThan(entity.position(), (double) f)) {
-                    blockpos$mutable.set(blockpos.getX(), blockpos.getY() + 1, blockpos.getZ());
-                    BlockState blockstate1 = world.getBlockState(blockpos$mutable);
-                    if (blockstate1.isAir(world, blockpos$mutable)) {
-                        BlockState blockstate2 = world.getBlockState(blockpos);
-                        boolean isFull = blockstate2.getBlock() == Blocks.WATER && blockstate2.getValue(FlowingFluidBlock.LEVEL) == 0;
-                        if (blockstate2.getMaterial() == Material.WATER && isFull && blockstate.canSurvive(world, blockpos) && world.isUnobstructed(blockstate, blockpos, ISelectionContext.empty()) && !net.minecraftforge.event.ForgeEventFactory.onBlockPlace(entity, net.minecraftforge.common.util.BlockSnapshot.create(world.dimension(), world, blockpos), net.minecraft.util.Direction.UP)) {
-                            world.setBlockAndUpdate(blockpos, blockstate);
-                            world.getBlockTicks().scheduleTick(blockpos, Blocks.FROSTED_ICE, MathHelper.nextInt(entity.getRandom(), 60, 120));
-                        }
-                    }
-                }
-            }
-
+        if(isEnchantedFrostWalker==0&&HisabisaConfig.isAlways_frosted_walk.get()) {
+            FrostWalkerEnchantment.onEntityMoved(entityLiving, entityLiving.getCommandSenderWorld(), entityLiving.blockPosition(),2);
         }
         int isEnchantedLavaWalker = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentInit.LAVA_WALKER.get(), boots);
-        if (entity.isOnGround() && isEnchantedLavaWalker == 0 && HisabisaConfig.isAlways_lava_walk.get()) {
-            BlockPos blockPos = evt.getEntity().blockPosition();
-            World world = evt.getEntity().getCommandSenderWorld();
-            BlockState blockstate = BlockInit.MODDED_OBSIDIAN.get().defaultBlockState();
-            float f = (float) Math.min(16, 2);
-            BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
-            for (BlockPos blockpos : BlockPos.betweenClosed(blockPos.offset((double) (-f), -1.0D, (double) (-f)), blockPos.offset((double) f, -1.0D, (double) f))) {
-                if (blockpos.closerThan(entity.position(), (double) f)) {
-                    blockpos$mutable.set(blockpos.getX(), blockpos.getY() + 1, blockpos.getZ());
-                    BlockState blockstate1 = world.getBlockState(blockpos$mutable);
-                    if (blockstate1.isAir(world, blockpos$mutable)) {
-                        BlockState blockstate2 = world.getBlockState(blockpos);
-                        boolean isFull = blockstate2.getBlock() == Blocks.LAVA && blockstate2.getValue(FlowingFluidBlock.LEVEL) == 0;
-                        if (blockstate2.getMaterial() == Material.LAVA && isFull && blockstate.canSurvive(world, blockpos) && world.isUnobstructed(blockstate, blockpos, ISelectionContext.empty()) && !net.minecraftforge.event.ForgeEventFactory.onBlockPlace(entity, net.minecraftforge.common.util.BlockSnapshot.create(world.dimension(), world, blockpos), net.minecraft.util.Direction.UP)) {
-                            world.setBlockAndUpdate(blockpos, blockstate);
-                            world.getBlockTicks().scheduleTick(blockpos, BlockInit.MODDED_OBSIDIAN.get(), MathHelper.nextInt(entity.getRandom(), 10, 20));
-                        }
-                    }
-                }
-            }
+        if(isEnchantedLavaWalker==0&&HisabisaConfig.isAlways_lava_walk.get()) {
+            LavaWalkerEnchantment.onEntityMoved(entityLiving, entityLiving.getCommandSenderWorld(), entityLiving.blockPosition(),2);
         }
     }
 

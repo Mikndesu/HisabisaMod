@@ -29,6 +29,7 @@ public class ModdedObsidian extends Block {
 
     @Override
     public void setPlacedBy(World world, BlockPos blockPos, BlockState blockState, @Nullable LivingEntity p_180633_4_, ItemStack itemStack) {
+        HisabisaMod.LOGGER.debug("Modded Obsidian has been placed.");
     }
 
     @Override
